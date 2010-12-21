@@ -1,4 +1,4 @@
-module PDF
+module HTMLDocPDF
 
   module HTMLDOC #:nodoc:
 

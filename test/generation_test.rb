@@ -5,7 +5,7 @@ class GenerationTest < Test::Unit::TestCase
   def setup
     # If you are using a different program path, you should configure
     # it here.
-    @program_path = PDF::HTMLDoc.program_path
+    @program_path = HTMLDocPDF::HTMLDoc.program_path
   end
 
   def test_program_path
@@ -18,14 +18,14 @@ class GenerationTest < Test::Unit::TestCase
     # Those tests are not exhaustive, but will ensure a reasonable
     # level of functionality. Output to directories is not tested for
     # now.
-    basic_test(PDF::HTML)
-    basic_test(PDF::HTML, "http://foo.com/\nhttp://bar.com/")
-    basic_test(PDF::PS)
-    basic_test(PDF::PDF)
+    basic_test(HTMLDocPDF::HTML)
+    basic_test(HTMLDocPDF::HTML, "http://foo.com/\nhttp://bar.com/")
+    basic_test(HTMLDocPDF::PS)
+    basic_test(HTMLDocPDF::PDF)
   end
 
   def test_generation_results
-    pdf = PDF::HTMLDoc.new
+    pdf = HTMLDocPDF::HTMLDoc.new
     pdf.set_option :webpage, true
     pdf.set_option :toc, false
     pdf << "<h1>Random title</h1>"
@@ -37,17 +37,17 @@ class GenerationTest < Test::Unit::TestCase
   end
 
   def test_invalid_program_path
-    PDF::HTMLDoc.program_path = @program_path + "-non-existing-path"
-    assert_raise(PDF::HTMLDocException) { PDF::HTMLDoc.new.generate }
+    HTMLDocPDF::HTMLDoc.program_path = @program_path + "-non-existing-path"
+    assert_raise(HTMLDocPDF::HTMLDocException) { HTMLDocPDF::HTMLDoc.new.generate }
   ensure
-    PDF::HTMLDoc.program_path = @program_path
+    HTMLDocPDF::HTMLDoc.program_path = @program_path
   end
 
   def test_generation_errors
     # This test can fail if the collapsing wavefront of the Internet
     # somehow becomes random.
     # Test invalid input
-    pdf = PDF::HTMLDoc.new
+    pdf = HTMLDocPDF::HTMLDoc.new
     pdf.set_option :outfile, "test.pdf"
     pdf << "http://#{simple_uid(".com")}:12345/#{simple_uid(".html")}"
     pdf.generate
@@ -55,7 +55,7 @@ class GenerationTest < Test::Unit::TestCase
     assert_nil pdf.result[:bytes]
     assert_nil pdf.result[:pages]
     # Test an invalid option
-    pdf = PDF::HTMLDoc.new
+    pdf = HTMLDocPDF::HTMLDoc.new
     pdf.set_option :outfile, "test.pdf"
     pdf << "http://#{simple_uid(".com")}:12345/#{simple_uid(".html")} --non-existing-option"
     pdf.generate
@@ -76,7 +76,7 @@ class GenerationTest < Test::Unit::TestCase
       tempfile.write(page)
       tempfile.flush
       # Simple format test
-      pdf = PDF::HTMLDoc.new(format)
+      pdf = HTMLDocPDF::HTMLDoc.new(format)
       pdf.set_option :outfile, path1
       pdf.add_page tempfile.path
       assert_equal true, pdf.generate
@@ -85,7 +85,7 @@ class GenerationTest < Test::Unit::TestCase
       File.delete(path1) if File.exists?(path1)
       File.delete(path2) if File.exists?(path2)
       # Simple webpag format test
-      pdf = PDF::HTMLDoc.new(format)
+      pdf = HTMLDocPDF::HTMLDoc.new(format)
       pdf.set_option :outfile, path1
       pdf.set_option :webpage, true
       pdf.add_page tempfile.path
@@ -95,7 +95,7 @@ class GenerationTest < Test::Unit::TestCase
       File.delete(path1) if File.exists?(path1)
       File.delete(path2) if File.exists?(path2)
       # Simple options test
-      pdf = PDF::HTMLDoc.new(format)
+      pdf = HTMLDocPDF::HTMLDoc.new(format)
       pdf.set_option :outfile, path1
       pdf.set_option :bodycolor, :black
       pdf.add_page tempfile.path
@@ -105,14 +105,14 @@ class GenerationTest < Test::Unit::TestCase
       File.delete(path1) if File.exists?(path1)
       File.delete(path2) if File.exists?(path2)
       # Free text generate test
-      pdf = PDF::HTMLDoc.new(format)
+      pdf = HTMLDocPDF::HTMLDoc.new(format)
       pdf.add_page page
       pdf.generate
       assert_equal pdf.result[:output], execute_htmldoc(path2, tempfile.path, "--format #{format}")
       # Delete temporary files
       File.delete(path2) if File.exists?(path2)
       # Inline generation test
-      result = PDF::HTMLDoc.create(format) do |p|
+      result = HTMLDocPDF::HTMLDoc.create(format) do |p|
         p.set_option :outfile, path1
         p.set_option :bodycolor, :black
         p.add_page tempfile.path

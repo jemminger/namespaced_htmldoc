@@ -1,3 +1,8 @@
+2010-12-21:
+* Forked from github.com/craigw/htmldoc
+* Only the main code and tests were updated; it is likely that the Rakefile is
+  now invalid/broken.
+
 0.2.3
 * The htmldoc command sometimes uses \r in the output. [Jon Wood]
 

@@ -1,8 +1,13 @@
-= PDF::HTMLDoc
+= HTMLDocPDF::HTMLDoc
 
-PDF::HTMLDoc is a wrapper around HTMLDOC, an open-source application
+HTMLDocPDF::HTMLDoc is a wrapper around HTMLDOC, an open-source application
 that converts HTML input files into formatted HTML, PDF or PostScript
 output.
+
+It was forked from https://github.com/craigw/htmldoc specifically to change
+the root namespace from PDF:: to HTMLDocPDF::, so that it will play nice with
+other gems that use the PDF:: namespace.
+
 
 Home:: http://rubyforge.org/projects/htmldoc/
 HTMLDOC Home:: http://www.htmldoc.org/
@@ -19,12 +24,12 @@ library.
 
 == USAGE
 
-Using PDF::HTMLDoc is trivial. The example below illustrates a simple
+Using HTMLDocPDF::HTMLDoc is trivial. The example below illustrates a simple
 use with an output file:
 
   require "htmldoc"
 
-  pdf = PDF::HTMLDoc.new
+  pdf = HTMLDocPDF::HTMLDoc.new
 
   pdf.set_option :outfile, "/tmp/outfile.pdf"
   pdf.set_option :bodycolor, :black
@@ -45,7 +50,7 @@ A similar approach can be used for inline generation:
 
   require "htmldoc"
 
-  document = PDF::HTMLDoc.create(PDF::PS) do |p|
+  document = HTMLDocPDF::HTMLDoc.create(HTMLDocPDF::PS) do |p|
 
     p.set_option :bodycolor, :black
     p.set_option :links, true
@@ -73,7 +78,7 @@ your system.
 
   require "htmldoc"
 
-  PDF::HTMLDoc.program_path = "\"C:\\Program Files\\HTMLDOC\\ghtmldoc.exe\""
+  HTMLDocPDF::HTMLDoc.program_path = "\"C:\\Program Files\\HTMLDOC\\ghtmldoc.exe\""
 
 See the notes below for usage considerations.
 
@@ -81,7 +86,7 @@ See the notes below for usage considerations.
 
 Here are a few of the common options that can be used to control
 HTMLDOC's output (assuming that <tt>pdf</tt> is a valid instance of
-PDF::HTMLDoc):
+HTMLDocPDF::HTMLDoc):
 
 To change the orientation to portrait mode, use:
   pdf.set_option :portrait, true 
@@ -115,7 +120,7 @@ command-line reference[http://www.htmldoc.org/htmldoc.html#CMDREF].
 
 == NOTES
 
-* PDF::HTMLDoc is both a Rails plugin and a gem, which means it can be
+* HTMLDocPDF::HTMLDoc is both a Rails plugin and a gem, which means it can be
   installed system-wide, or just used on a Rails project without
   further dependencies.
 
@@ -135,6 +140,6 @@ command-line reference[http://www.htmldoc.org/htmldoc.html#CMDREF].
   (1.8.27). The development version (1.9) does support CSS, but in a
   limited way. 
 
-* HTMLDOC doesn't support UTF-8. Since PDF::HTMLDOC makes no attempt
+* HTMLDOC doesn't support UTF-8. Since HTMLDocPDF::HTMLDOC makes no attempt
   to convert any input passed to it, it's the caller's responsibility
   to provide any necessary conversions.

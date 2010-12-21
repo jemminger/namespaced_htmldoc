@@ -34,7 +34,7 @@ end
 
 # Generate all the Rake tasks
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
-hoe = Hoe.new(GEM_NAME, PDF::HTMLDOC::VERSION::STRING) do |p|
+hoe = Hoe.new(GEM_NAME, HTMLDocPDF::HTMLDOC::VERSION::STRING) do |p|
 
   p.author = AUTHOR 
   p.email = EMAIL

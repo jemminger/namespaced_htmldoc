@@ -1,6 +1,6 @@
 require "tempfile"
 
-module PDF
+module HTMLDocPDF
 
   HTML = "html"
   HTMLSEP = "htmlsep"
@@ -143,7 +143,7 @@ module PDF
     # or file is provided, the method will return <tt>true</tt> or
     # <tt>false</tt> to indicate completion. If no output directory or
     # file is provided, it will return a string representing the
-    # entire output. Generate will raise a PDF::HTMLDocException if
+    # entire output. Generate will raise a HTMLDocPDF::HTMLDocException if
     # the program path can't be found.
     def generate
       tempfile = nil
